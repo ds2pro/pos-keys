@@ -193,3 +193,25 @@ export const dateConditions = (from?: string, to?: string): object => {
 
   return cond;
 };
+
+export const calculateDateAfterDays = (days: number): Date => {
+  const currentDate = new Date();
+  currentDate.setDate(currentDate.getDate() + days);
+  return currentDate;
+};
+
+export const separateKeyEveryNChars = (key: string, n = 5): string => {
+  let separatedKey = '';
+  for (let i = 0; i < key.length; i += n) {
+    separatedKey += key.slice(i, i + n) + (i + n < key.length ? '-' : '');
+  }
+  return separatedKey;
+};
+
+export const removeHyphens = (key: string | null): string => {
+  if (key == null) {
+    return key;
+  }
+
+  return key.replace(/-/g, '');
+};
