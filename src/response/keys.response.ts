@@ -29,4 +29,5 @@ export type ActivateKeyResponse = {
   activatedDate: number;
   expiryDate: number;
   customer: Customer;
+  currentTimestamp: number;
 };

@@ -14,6 +14,7 @@ import {
   separateKeyEveryNChars,
   toTimestamp,
 } from '@/utils/util';
+import moment from 'moment';
 import { Op } from 'sequelize';
 
 interface IKeysService {
@@ -188,7 +189,6 @@ class KeysService implements IKeysService {
   async activateKey(dto: ActivateKeyDto): Promise<ActivateKeyResponse> {
     const t = await s.transaction();
     try {
-      console.log(removeHyphens(dto.key));
       const key = await tblKeys.findOne({
         where: {
           key: removeHyphens(dto.key),
@@ -224,6 +224,7 @@ class KeysService implements IKeysService {
         period: key.period,
         activatedDate: toTimestamp(key.activatedDate),
         expiryDate: toTimestamp(key.expiryDate),
+        currentTimestamp: moment().unix(),
       };
     } catch (e) {
       await t.rollback();
