@@ -1,10 +1,11 @@
-import { EncryptTextDto } from '@/dtos/util.dto';
+import { DecryptTextDto, EncryptTextDto } from '@/dtos/util.dto';
 import { EncryptTextRequest } from '@/requests/util.request';
-import { EncryptTextResponse } from '@/response/util.response';
+import { DecryptTextResponse, EncryptTextResponse } from '@/response/util.response';
 import * as crypto from 'crypto';
 
 interface IUtilsService {
   encryptText(dto: EncryptTextDto): Promise<EncryptTextResponse>;
+  decryptText(dto: DecryptTextDto): Promise<DecryptTextResponse>;
 }
 class UtilsService implements IUtilsService {
   async encryptText(dto: EncryptTextRequest): Promise<EncryptTextResponse> {
@@ -17,6 +18,16 @@ class UtilsService implements IUtilsService {
     let encryptedData = cipher.update(dataString, 'utf-8', 'hex');
     encryptedData += cipher.final('hex');
     return encryptedData;
+  }
+
+  async decryptText(dto: DecryptTextDto): Promise<DecryptTextResponse> {
+    const algorithm = 'aes-256-cbc';
+
+    const decipher = crypto.createDecipheriv(algorithm, dto.key, dto.iv);
+
+    let decryptedData = decipher.update(dto.text, 'hex', 'utf-8');
+    decryptedData += decipher.final('utf-8');
+    return decryptedData;
   }
 }
 

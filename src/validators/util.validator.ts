@@ -6,3 +6,9 @@ export const encryptTextValidator = checkSchema({
   iv: CUSTOM_NAME(500),
   text: CUSTOM_NAME(500),
 });
+
+export const decryptTextValidator = checkSchema({
+  key: CUSTOM_NAME(500),
+  iv: CUSTOM_NAME(500),
+  text: CUSTOM_NAME(500),
+});
