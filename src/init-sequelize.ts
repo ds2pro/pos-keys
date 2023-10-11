@@ -12,6 +12,11 @@ const s = new Sequelize(DB_NAME, DB_USER, DB_PASS, {
   port: Number(DB_PORT || 3306),
   host: DB_HOST,
   logging: false,
+  pool: {
+    max: 20,
+    idle: 15000,
+    acquire: 30000,
+  },
 });
 export const init = () => {
   initModels(s);
