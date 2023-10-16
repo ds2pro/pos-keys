@@ -11,6 +11,7 @@ export interface tblKeysAttributes {
   generatedDate?: Date;
   activatedDate?: Date;
   expiryDate?: Date;
+  isActive?: boolean;
   isDeleted?: boolean;
   createdDate?: Date;
   updatedDate?: Date;
@@ -31,6 +32,7 @@ export type tblKeysOptionalAttributes =
   | 'generatedDate'
   | 'activatedDate'
   | 'expiryDate'
+  | 'isActive'
   | 'isDeleted'
   | 'createdDate'
   | 'updatedDate'
@@ -49,6 +51,7 @@ export class tblKeys extends Model<tblKeysAttributes, tblKeysCreationAttributes>
   generatedDate?: Date;
   activatedDate?: Date;
   expiryDate?: Date;
+  isActive?: boolean;
   isDeleted?: boolean;
   createdDate?: Date;
   updatedDate?: Date;
@@ -102,6 +105,10 @@ export class tblKeys extends Model<tblKeysAttributes, tblKeysCreationAttributes>
         },
         expiryDate: {
           type: DataTypes.DATE,
+          allowNull: true,
+        },
+        isActive: {
+          type: DataTypes.BOOLEAN,
           allowNull: true,
         },
         isDeleted: {
