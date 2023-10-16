@@ -88,19 +88,7 @@ class KeysService implements IKeysService {
       await t.commit();
 
       return {
-        id: key.id,
-        key: separateKeyEveryNChars(key.key),
-        customer: dto.customerId
-          ? {
-              id: customer.id,
-              name: customer.name,
-              email: customer.email,
-              phone: customer.phone,
-              mobile: customer.mobile,
-            }
-          : null,
-        period: dto.period,
-        expiryDate: toTimestamp(expiryDate),
+        key: separateKeyEveryNChars(key.key), 
       };
     } catch (e) {
       await t.rollback();
