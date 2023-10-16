@@ -16,3 +16,7 @@ export const createKeyValidator = checkSchema({
 export const activateKeyValidator = checkSchema({
   key: CUSTOM_NAME(50),
 });
+
+export const deactivateKeyValidator = checkSchema({
+  key: CUSTOM_NAME(50),
+});
