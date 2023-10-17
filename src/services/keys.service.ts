@@ -1,9 +1,11 @@
 import { customers } from '@/database/models/customers';
 import { tblKeys } from '@/database/models/tblKeys';
-import { ActivateKeyDto, CreateKeyDto, GetKeysDto } from '@/dtos/keys.dto';
+import { ActivateKeyDto, CreateKeyDto, DeactivateKeyDto, GetKeysDto } from '@/dtos/keys.dto';
 import { HttpException } from '@/exceptions/HttpException';
 import s from '@/init-sequelize';
-import { ActivateKeyResponse, CreateKeyResponse, GetKeysListItem, GetKeysResponse } from '@/response/keys.response';
+import { DeactivateKeyRequest } from '@/requests/keys.request';
+import { ActivateKeyResponse, CreateKeyResponse, DeactivateKeyResponse, GetKeysListItem, GetKeysResponse } from '@/response/keys.response';
+import { EmptyResponse } from '@/response/main.response';
 import { createUserLog } from '@/utils/user.util';
 import {
   calculateDateAfterDays,
@@ -21,6 +23,7 @@ interface IKeysService {
   createKey(dto: CreateKeyDto): Promise<CreateKeyResponse>;
   getKeys(dto: GetKeysDto): Promise<GetKeysResponse>;
   activateKey(dto: ActivateKeyDto): Promise<ActivateKeyResponse>;
+  deactivateKey(dto: DeactivateKeyDto): Promise<DeactivateKeyResponse>;
 }
 class KeysService implements IKeysService {
   async generateLicenseKey(): Promise<string> {
@@ -181,6 +184,7 @@ class KeysService implements IKeysService {
         where: {
           key: removeHyphens(dto.key),
           activatedDate: { [Op.is]: null },
+          isDeactivated : {[Op.not] : true}
         },
         include: [
           {
@@ -214,6 +218,29 @@ class KeysService implements IKeysService {
         expiryDate: toTimestamp(key.expiryDate),
         currentTimestamp: moment().unix(),
       };
+    } catch (e) {
+      await t.rollback();
+      throw e;
+    }
+  }
+
+  async deactivateKey(dto: DeactivateKeyRequest): Promise<EmptyResponse> {
+    const t = await s.transaction();
+    try {
+      const key = await tblKeys.findOne({
+        where: {
+          key: removeHyphens(dto.key),
+          activatedDate: { [Op.not]: null },
+        },
+      });
+      if (!key) {
+        throw new HttpException(404, 'Invalid Key');
+      }
+      key.isDeactivated = true
+      await key.save();
+      await createUserLog(null, 'Deactivate Key', `User deactivated a key with id: ${key.id}`, t);
+      await t.commit();
+      return {}
     } catch (e) {
       await t.rollback();
       throw e;

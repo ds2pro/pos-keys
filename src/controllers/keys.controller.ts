@@ -1,7 +1,7 @@
 import { GetKeysQuery } from '@/dtos/keys.dto';
 import { ActiveQuery, AuthenticatedUser, PaginationQuery, SearchQuery } from '@/dtos/main.dto';
 import { RequestWithUser } from '@/interfaces/auth.interface';
-import { ActivateKeyRequest, CreateKeyRequest } from '@/requests/keys.request';
+import { ActivateKeyRequest, CreateKeyRequest, DeactivateKeyRequest } from '@/requests/keys.request';
 import KeysService from '@/services/keys.service';
 import { Response, NextFunction } from 'express';
 
@@ -52,6 +52,19 @@ class KeysController {
       next(e);
     }
   };
+
+  public deactivateKey = async (req: RequestWithUser , res: Response , next : NextFunction) :Promise<void> =>{
+    try{
+
+      const body : DeactivateKeyRequest = req.body
+      const result = await this.keysService.deactivateKey({
+        ...body,
+      });
+      res.status(200).json(result)
+    }catch(e){
+      next(e)
+    }
+  }
 }
 
 export default new KeysController();
