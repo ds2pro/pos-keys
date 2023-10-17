@@ -196,6 +196,7 @@ class KeysService implements IKeysService {
         where: {
           key: removeHyphens(dto.key),
           activatedDate: { [Op.is]: null },
+          isActive :{[Op.not] : true}
         },
         include: [
           {
@@ -208,6 +209,7 @@ class KeysService implements IKeysService {
         throw new HttpException(404, 'Invalid Key');
       }
       key.activatedDate = new Date();
+      key.isActive = true;
       await key.save();
       await createUserLog(null, 'Activate Key', `User created key with id: ${key.id}`, t);
       await t.commit();
@@ -247,7 +249,7 @@ class KeysService implements IKeysService {
       if (!key) {
         throw new HttpException(404, 'Invalid Key');
       }
-      key.expiryDate = new Date();
+      key.isActive = false
       await key.save();
       await createUserLog(null, 'Deactivate Key', `User deactivated a key with id: ${key.id}`, t);
       await t.commit();
