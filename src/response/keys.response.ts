@@ -2,11 +2,8 @@ import { Identifiable, IncludeTimestamps } from '@/dtos/main.dto';
 import { CreatedByUser, Customer } from '@/models/base.model';
 import { PaginatedResponse } from './main.response';
 
-export type CreateKeyResponse = Identifiable & {
-  customer: Customer;
+export type CreateKeyResponse = {
   key: string;
-  period: number;
-  expiryDate: number;
 };
 
 export type GetKeysListItem = IncludeTimestamps<{
