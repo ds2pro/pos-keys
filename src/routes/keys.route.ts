@@ -4,8 +4,8 @@ import checkPermissionsMiddleware from '@/middlewares/check-permissions.middlewa
 import { Resource } from '@/permissions';
 import KeysController from '@/controllers/keys.controller';
 import { errorHandlerValidator } from '@/validators/error-handler.validator';
-import keysController from '@/controllers/keys.controller';
-import { activateKeyValidator, createKeyValidator } from '@/validators/keys.validator';
+
+import { activateKeyValidator, createKeyValidator, deactivateKeyValidator } from '@/validators/keys.validator';
 class KeysRoute extends Route {
   configureRoutes() {
     this.router
@@ -14,6 +14,7 @@ class KeysRoute extends Route {
       .post(authMiddleware, createKeyValidator, errorHandlerValidator, checkPermissionsMiddleware(Resource.KEY), KeysController.createKey);
     this.router.route('/:key').get(authMiddleware, checkPermissionsMiddleware(Resource.KEY), KeysController.getKey);
     this.router.route('/activate').post(activateKeyValidator, errorHandlerValidator, KeysController.activateKey);
+    this.router.route('/deactivate').post(deactivateKeyValidator, errorHandlerValidator, KeysController.deactivateKey);
   }
   getPath(): string {
     return '/keys';

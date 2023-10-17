@@ -1,4 +1,4 @@
-import { ActivateKeyRequest, CreateKeyRequest } from '@/requests/keys.request';
+import { ActivateKeyRequest, CreateKeyRequest, DeactivateKeyRequest } from '@/requests/keys.request';
 import { ActiveQuery, Authenticable, PaginationQuery, SearchQuery } from './main.dto';
 
 export type CreateKeyDto = Authenticable<CreateKeyRequest>;
@@ -9,5 +9,6 @@ export type GetKeysQuery = {
 };
 
 export type ActivateKeyDto = ActivateKeyRequest;
+export type DeactivateKeyDto = DeactivateKeyRequest;
 
 export type GetKeyDto = { key: string };

@@ -6,3 +6,7 @@ export type CreateKeyRequest = {
 export type ActivateKeyRequest = {
   key: string;
 };
+
+export type DeactivateKeyRequest = {
+  key: string;
+};
