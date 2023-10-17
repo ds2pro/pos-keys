@@ -1,6 +1,6 @@
 import { Identifiable, IncludeTimestamps } from '@/dtos/main.dto';
 import { CreatedByUser, Customer } from '@/models/base.model';
-import { PaginatedResponse } from './main.response';
+import { EmptyResponse, PaginatedResponse } from './main.response';
 
 export type CreateKeyResponse = {
   key: string;
@@ -30,3 +30,4 @@ export type ActivateKeyResponse = {
 };
 
 export type GetKeyResponse = GetKeysListItem;
+export type DeactivateKeyResponse = EmptyResponse

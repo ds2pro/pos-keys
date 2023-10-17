@@ -1,10 +1,10 @@
 import { customers } from '@/database/models/customers';
 import { tblKeys } from '@/database/models/tblKeys';
-import { ActivateKeyDto, CreateKeyDto, DeactivateKeyDto, GetKeysDto, GetKeyDto } from '@/dtos/keys.dto';
+import { ActivateKeyDto, CreateKeyDto, DeactivateKeyDto, GetKeysDto } from '@/dtos/keys.dto';
 import { HttpException } from '@/exceptions/HttpException';
 import s from '@/init-sequelize';
 import { DeactivateKeyRequest } from '@/requests/keys.request';
-import { ActivateKeyResponse, CreateKeyResponse, GetKeyResponse, DeactivateKeyResponse, GetKeysListItem, GetKeysResponse } from '@/response/keys.response';
+import { ActivateKeyResponse, CreateKeyResponse, DeactivateKeyResponse, GetKeysListItem, GetKeysResponse } from '@/response/keys.response';
 import { EmptyResponse } from '@/response/main.response';
 import { createUserLog } from '@/utils/user.util';
 import {
