@@ -184,6 +184,7 @@ class KeysService implements IKeysService {
         where: {
           key: removeHyphens(dto.key),
           activatedDate: { [Op.is]: null },
+          isDeactivated : {[Op.not] : false}
         },
         include: [
           {
