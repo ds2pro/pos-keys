@@ -2,14 +2,7 @@ import { CUSTOM_NAME, STRICTLY_POSITIVE_NUMBER, TIME_PERIOD } from './common.val
 import { checkSchema } from 'express-validator';
 
 export const createKeyValidator = checkSchema({
-  customerId: {
-    optional: {
-      options: {
-        nullable: true,
-      },
-    },
-    ...STRICTLY_POSITIVE_NUMBER,
-  },
+  customerId: STRICTLY_POSITIVE_NUMBER,
   period: TIME_PERIOD,
 });
 
