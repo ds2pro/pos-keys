@@ -30,4 +30,4 @@ export type ActivateKeyResponse = {
 };
 
 export type GetKeyResponse = GetKeysListItem;
-export type DeactivateKeyResponse = EmptyResponse
+export type DeactivateKeyResponse = EmptyResponse;

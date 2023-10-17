@@ -65,18 +65,17 @@ class KeysController {
     }
   };
 
-  public deactivateKey = async (req: RequestWithUser , res: Response , next : NextFunction) :Promise<void> =>{
-    try{
-
-      const body : DeactivateKeyRequest = req.body
+  public deactivateKey = async (req: RequestWithUser, res: Response, next: NextFunction): Promise<void> => {
+    try {
+      const body: DeactivateKeyRequest = req.body;
       const result = await this.keysService.deactivateKey({
         ...body,
       });
-      res.status(200).json(result)
-    }catch(e){
-      next(e)
+      res.status(200).json(result);
+    } catch (e) {
+      next(e);
     }
-  }
+  };
 }
 
 export default new KeysController();

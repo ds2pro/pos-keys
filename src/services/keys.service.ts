@@ -1,10 +1,17 @@
 import { customers } from '@/database/models/customers';
 import { tblKeys } from '@/database/models/tblKeys';
-import { ActivateKeyDto, CreateKeyDto, DeactivateKeyDto, GetKeysDto } from '@/dtos/keys.dto';
+import { ActivateKeyDto, CreateKeyDto, DeactivateKeyDto, GetKeyDto, GetKeysDto } from '@/dtos/keys.dto';
 import { HttpException } from '@/exceptions/HttpException';
 import s from '@/init-sequelize';
 import { DeactivateKeyRequest } from '@/requests/keys.request';
-import { ActivateKeyResponse, CreateKeyResponse, DeactivateKeyResponse, GetKeysListItem, GetKeysResponse } from '@/response/keys.response';
+import {
+  ActivateKeyResponse,
+  CreateKeyResponse,
+  DeactivateKeyResponse,
+  GetKeyResponse,
+  GetKeysListItem,
+  GetKeysResponse,
+} from '@/response/keys.response';
 import { EmptyResponse } from '@/response/main.response';
 import { createUserLog } from '@/utils/user.util';
 import {
@@ -222,7 +229,7 @@ class KeysService implements IKeysService {
         where: {
           key: removeHyphens(dto.key),
           activatedDate: { [Op.is]: null },
-          isDeactivated : {[Op.not] : true}
+          isDeactivated: { [Op.not]: true },
         },
         include: [
           {
@@ -274,11 +281,11 @@ class KeysService implements IKeysService {
       if (!key) {
         throw new HttpException(404, 'Invalid Key');
       }
-      key.isDeactivated = true
+      key.isDeactivated = true;
       await key.save();
       await createUserLog(null, 'Deactivate Key', `User deactivated a key with id: ${key.id}`, t);
       await t.commit();
-      return {}
+      return {};
     } catch (e) {
       await t.rollback();
       throw e;
