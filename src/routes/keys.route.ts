@@ -12,7 +12,7 @@ class KeysRoute extends Route {
       .route('/')
       .get(authMiddleware, checkPermissionsMiddleware(Resource.KEY), KeysController.getKeys)
       .post(authMiddleware, createKeyValidator, errorHandlerValidator, checkPermissionsMiddleware(Resource.KEY), KeysController.createKey);
-
+    this.router.route('/:key').get(authMiddleware, checkPermissionsMiddleware(Resource.KEY), KeysController.getKey);
     this.router.route('/activate').post(activateKeyValidator, errorHandlerValidator, KeysController.activateKey);
   }
   getPath(): string {

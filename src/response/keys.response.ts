@@ -28,3 +28,5 @@ export type ActivateKeyResponse = {
   customer: Customer;
   currentTimestamp: number;
 };
+
+export type GetKeyResponse = GetKeysListItem;

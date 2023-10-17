@@ -1,9 +1,9 @@
 import { customers } from '@/database/models/customers';
 import { tblKeys } from '@/database/models/tblKeys';
-import { ActivateKeyDto, CreateKeyDto, GetKeysDto } from '@/dtos/keys.dto';
+import { ActivateKeyDto, CreateKeyDto, GetKeyDto, GetKeysDto } from '@/dtos/keys.dto';
 import { HttpException } from '@/exceptions/HttpException';
 import s from '@/init-sequelize';
-import { ActivateKeyResponse, CreateKeyResponse, GetKeysListItem, GetKeysResponse } from '@/response/keys.response';
+import { ActivateKeyResponse, CreateKeyResponse, GetKeyResponse, GetKeysListItem, GetKeysResponse } from '@/response/keys.response';
 import { createUserLog } from '@/utils/user.util';
 import {
   calculateDateAfterDays,
@@ -20,6 +20,7 @@ import { Op } from 'sequelize';
 interface IKeysService {
   createKey(dto: CreateKeyDto): Promise<CreateKeyResponse>;
   getKeys(dto: GetKeysDto): Promise<GetKeysResponse>;
+  getKey(dto: GetKeyDto): Promise<GetKeyResponse>;
   activateKey(dto: ActivateKeyDto): Promise<ActivateKeyResponse>;
 }
 class KeysService implements IKeysService {
@@ -88,7 +89,7 @@ class KeysService implements IKeysService {
       await t.commit();
 
       return {
-        key: separateKeyEveryNChars(key.key), 
+        key: separateKeyEveryNChars(key.key),
       };
     } catch (e) {
       await t.rollback();
@@ -173,7 +174,44 @@ class KeysService implements IKeysService {
       data: data,
     };
   }
+  async getKey(dto: GetKeyDto): Promise<GetKeyResponse> {
+    const key = await tblKeys.findOne({
+      where: {
+        key: removeHyphens(dto.key),
+      },
+      include: [
+        {
+          model: customers,
+          as: 'customer',
+        },
+      ],
+      order: [['createdDate', 'DESC']],
+    });
+    if (!key) {
+      throw new HttpException(404, 'Key not found');
+    }
 
+    return {
+      id: key.id,
+      guid: key.guid,
+      customer: key.customer
+        ? {
+            id: key.customer.id,
+            name: key.customer.name,
+            email: key.customer.email,
+            phone: key.customer.phone,
+            mobile: key.customer.mobile,
+          }
+        : null,
+      key: separateKeyEveryNChars(key.key),
+      period: key.period,
+      generatedDate: toTimestamp(key.generatedDate),
+      activatedDate: key.activatedDate ? toTimestamp(key.activatedDate) : null,
+      expiryDate: key.expiryDate ? toTimestamp(key.expiryDate) : null,
+      createdDate: toTimestamp(key.createdDate),
+      updatedDate: toTimestamp(key.updatedDate),
+    };
+  }
   async activateKey(dto: ActivateKeyDto): Promise<ActivateKeyResponse> {
     const t = await s.transaction();
     try {

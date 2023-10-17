@@ -9,3 +9,5 @@ export type GetKeysQuery = {
 };
 
 export type ActivateKeyDto = ActivateKeyRequest;
+
+export type GetKeyDto = { key: string };

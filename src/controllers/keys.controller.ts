@@ -41,6 +41,18 @@ class KeysController {
     }
   };
 
+  public getKey = async (req: RequestWithUser, res: Response, next: NextFunction): Promise<void> => {
+    try {
+      const { key } = req.params;
+      const result = await this.keysService.getKey({
+        key: key,
+      });
+      res.status(200).json(result);
+    } catch (e) {
+      next(e);
+    }
+  };
+
   public activateKey = async (req: RequestWithUser, res: Response, next: NextFunction): Promise<void> => {
     try {
       const body: ActivateKeyRequest = req.body;
