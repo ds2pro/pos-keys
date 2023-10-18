@@ -5,3 +5,7 @@ export interface PaginatedResponse<T> {
   size: number;
   data: T[];
 }
+
+export type MessageResponse = {
+  message: string;
+};

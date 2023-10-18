@@ -14,7 +14,9 @@ class KeysRoute extends Route {
       .post(authMiddleware, createKeyValidator, errorHandlerValidator, checkPermissionsMiddleware(Resource.KEY), KeysController.createKey);
     this.router.route('/:key').get(authMiddleware, checkPermissionsMiddleware(Resource.KEY), KeysController.getKey);
     this.router.route('/activate').post(activateKeyValidator, errorHandlerValidator, KeysController.activateKey);
-    this.router.route('/deactivate').post(deactivateKeyValidator, errorHandlerValidator, KeysController.deactivateKey);
+    this.router
+      .route('/deactivate')
+      .post(authMiddleware, checkPermissionsMiddleware(Resource.KEY), deactivateKeyValidator, errorHandlerValidator, KeysController.deactivateKey);
   }
   getPath(): string {
     return '/keys';

@@ -12,7 +12,7 @@ import {
   GetKeysListItem,
   GetKeysResponse,
 } from '@/response/keys.response';
-import { EmptyResponse } from '@/response/main.response';
+import { EmptyResponse, MessageResponse } from '@/response/main.response';
 import { createUserLog } from '@/utils/user.util';
 import {
   calculateDateAfterDays,
@@ -161,6 +161,7 @@ class KeysService implements IKeysService {
         generatedDate: toTimestamp(key.generatedDate),
         activatedDate: key.activatedDate ? toTimestamp(key.activatedDate) : null,
         expiryDate: key.expiryDate ? toTimestamp(key.expiryDate) : null,
+        isDeactivated: key.isDeactivated,
         createdDate: toTimestamp(key.createdDate),
         updatedDate: toTimestamp(key.updatedDate),
       };
@@ -218,6 +219,7 @@ class KeysService implements IKeysService {
       generatedDate: toTimestamp(key.generatedDate),
       activatedDate: key.activatedDate ? toTimestamp(key.activatedDate) : null,
       expiryDate: key.expiryDate ? toTimestamp(key.expiryDate) : null,
+      isDeactivated: key.isDeactivated,
       createdDate: toTimestamp(key.createdDate),
       updatedDate: toTimestamp(key.updatedDate),
     };
@@ -229,7 +231,7 @@ class KeysService implements IKeysService {
         where: {
           key: removeHyphens(dto.key),
           activatedDate: { [Op.is]: null },
-          isDeactivated: { [Op.not]: true },
+          [Op.or]: [{ isDeactivated: false }, { isDeactivated: null }],
         },
         include: [
           {
@@ -269,7 +271,7 @@ class KeysService implements IKeysService {
     }
   }
 
-  async deactivateKey(dto: DeactivateKeyRequest): Promise<EmptyResponse> {
+  async deactivateKey(dto: DeactivateKeyRequest): Promise<MessageResponse> {
     const t = await s.transaction();
     try {
       const key = await tblKeys.findOne({
@@ -285,7 +287,9 @@ class KeysService implements IKeysService {
       await key.save();
       await createUserLog(null, 'Deactivate Key', `User deactivated a key with id: ${key.id}`, t);
       await t.commit();
-      return {};
+      return {
+        message: 'Key deactivated successfully',
+      };
     } catch (e) {
       await t.rollback();
       throw e;
