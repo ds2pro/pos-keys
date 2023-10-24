@@ -13,3 +13,9 @@ export const activateKeyValidator = checkSchema({
 export const deactivateKeyValidator = checkSchema({
   key: CUSTOM_NAME(50),
 });
+
+export const getEncryptedKeyValidator = checkSchema({
+  key: CUSTOM_NAME(50),
+  iv: CUSTOM_NAME(50),
+  licenseKey: CUSTOM_NAME(50),
+});

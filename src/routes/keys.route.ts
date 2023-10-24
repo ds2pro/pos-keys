@@ -5,7 +5,7 @@ import { Resource } from '@/permissions';
 import KeysController from '@/controllers/keys.controller';
 import { errorHandlerValidator } from '@/validators/error-handler.validator';
 
-import { activateKeyValidator, createKeyValidator, deactivateKeyValidator } from '@/validators/keys.validator';
+import { activateKeyValidator, createKeyValidator, deactivateKeyValidator, getEncryptedKeyValidator } from '@/validators/keys.validator';
 class KeysRoute extends Route {
   configureRoutes() {
     this.router
@@ -17,6 +17,15 @@ class KeysRoute extends Route {
     this.router
       .route('/deactivate')
       .post(authMiddleware, checkPermissionsMiddleware(Resource.KEY), deactivateKeyValidator, errorHandlerValidator, KeysController.deactivateKey);
+    this.router
+      .route('/encrypted-key')
+      .post(
+        authMiddleware,
+        checkPermissionsMiddleware(Resource.KEY),
+        getEncryptedKeyValidator,
+        errorHandlerValidator,
+        KeysController.getEncryptedKey,
+      );
   }
   getPath(): string {
     return '/keys';

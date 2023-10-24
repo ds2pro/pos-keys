@@ -4,11 +4,11 @@ import { DecryptTextResponse, EncryptTextResponse } from '@/response/util.respon
 import * as crypto from 'crypto';
 
 interface IUtilsService {
-  encryptText(dto: EncryptTextDto): Promise<EncryptTextResponse>;
-  decryptText(dto: DecryptTextDto): Promise<DecryptTextResponse>;
+  encryptText(dto: EncryptTextDto): EncryptTextResponse;
+  decryptText(dto: DecryptTextDto): DecryptTextResponse;
 }
 class UtilsService implements IUtilsService {
-  async encryptText(dto: EncryptTextRequest): Promise<EncryptTextResponse> {
+  encryptText(dto: EncryptTextRequest): EncryptTextResponse {
     const algorithm = 'aes-256-cbc';
 
     const cipher = crypto.createCipheriv(algorithm, dto.key, dto.iv);
@@ -20,7 +20,7 @@ class UtilsService implements IUtilsService {
     return encryptedData;
   }
 
-  async decryptText(dto: DecryptTextDto): Promise<DecryptTextResponse> {
+  decryptText(dto: DecryptTextDto): DecryptTextResponse {
     const algorithm = 'aes-256-cbc';
 
     const decipher = crypto.createDecipheriv(algorithm, dto.key, dto.iv);

@@ -1,6 +1,6 @@
 import { customers } from '@/database/models/customers';
 import { tblKeys } from '@/database/models/tblKeys';
-import { ActivateKeyDto, CreateKeyDto, DeactivateKeyDto, GetKeyDto, GetKeysDto } from '@/dtos/keys.dto';
+import { ActivateKeyDto, CreateKeyDto, DeactivateKeyDto, GetEncryptedKeyDto, GetKeyDto, GetKeysDto } from '@/dtos/keys.dto';
 import { HttpException } from '@/exceptions/HttpException';
 import s from '@/init-sequelize';
 import { DeactivateKeyRequest } from '@/requests/keys.request';
@@ -8,6 +8,7 @@ import {
   ActivateKeyResponse,
   CreateKeyResponse,
   DeactivateKeyResponse,
+  GetEncryptedKeyResponse,
   GetKeyResponse,
   GetKeysListItem,
   GetKeysResponse,
@@ -25,6 +26,7 @@ import {
 } from '@/utils/util';
 import moment from 'moment';
 import { Op } from 'sequelize';
+import UtilsService from './util.service';
 
 interface IKeysService {
   createKey(dto: CreateKeyDto): Promise<CreateKeyResponse>;
@@ -32,6 +34,7 @@ interface IKeysService {
   getKey(dto: GetKeyDto): Promise<GetKeyResponse>;
   activateKey(dto: ActivateKeyDto): Promise<ActivateKeyResponse>;
   deactivateKey(dto: DeactivateKeyDto): Promise<DeactivateKeyResponse>;
+  getEncryptedKey(dto: GetEncryptedKeyDto): Promise<GetEncryptedKeyResponse>;
 }
 class KeysService implements IKeysService {
   async generateLicenseKey(): Promise<string> {
@@ -79,7 +82,7 @@ class KeysService implements IKeysService {
         }
       }
 
-      const expiryDate = dto.period > 0 ? calculateDateAfterDays(dto.period) : null;
+      // const expiryDate = dto.period > 0 ? calculateDateAfterDays(dto.period) : null;
 
       const key = await tblKeys.create(
         {
@@ -87,7 +90,7 @@ class KeysService implements IKeysService {
           customerId: dto.customerId,
           period: dto.period,
           generatedDate: new Date(),
-          expiryDate: expiryDate,
+          expiryDate: null,
           createdBy: dto.__by.id,
         },
         {
@@ -294,6 +297,41 @@ class KeysService implements IKeysService {
       await t.rollback();
       throw e;
     }
+  }
+
+  async getEncryptedKey(dto: GetEncryptedKeyDto): Promise<GetEncryptedKeyResponse> {
+    const utilService = new UtilsService();
+    const key = await tblKeys.findOne({
+      where: {
+        key: removeHyphens(dto.licenseKey),
+      },
+    });
+    if (!key) {
+      throw new HttpException(404, 'Key not found');
+    }
+
+    return {
+      customerId: key.customerId,
+      key: key.key,
+      encryptedPeriod: utilService.encryptText({
+        key: dto.key,
+        iv: dto.iv,
+        text: String(key.period),
+      }),
+      encryptedExpiryDate:
+        key.period === -1
+          ? null
+          : utilService.encryptText({
+              key: dto.key,
+              iv: dto.iv,
+              text: String(toTimestamp(calculateDateAfterDays(key.period))),
+            }),
+      encryptedLastRequestDate: utilService.encryptText({
+        key: dto.key,
+        iv: dto.iv,
+        text: String(moment().valueOf()),
+      }),
+    };
   }
 }
 

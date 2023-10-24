@@ -9,7 +9,7 @@ class UtilController {
   public encryptText = async (req: RequestWithUser, res: Response, next: NextFunction): Promise<void> => {
     try {
       const body: EncryptTextRequest = req.body;
-      const result = await this.utilsService.encryptText({
+      const result = this.utilsService.encryptText({
         ...body,
       });
       res.status(200).json(result);
@@ -21,7 +21,7 @@ class UtilController {
   public decryptText = async (req: RequestWithUser, res: Response, next: NextFunction): Promise<void> => {
     try {
       const body: DecryptTextRequest = req.body;
-      const result = await this.utilsService.decryptText({
+      const result = this.utilsService.decryptText({
         ...body,
       });
       res.status(200).json(result);

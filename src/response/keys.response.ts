@@ -32,3 +32,11 @@ export type ActivateKeyResponse = {
 
 export type GetKeyResponse = GetKeysListItem;
 export type DeactivateKeyResponse = MessageResponse;
+
+export type GetEncryptedKeyResponse = {
+  customerId: number;
+  key: string;
+  encryptedPeriod: string;
+  encryptedExpiryDate: string;
+  encryptedLastRequestDate: string;
+};

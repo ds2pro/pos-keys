@@ -10,3 +10,9 @@ export type ActivateKeyRequest = {
 export type DeactivateKeyRequest = {
   key: string;
 };
+
+export type GetEncryptedKeyRequest = {
+  key: string;
+  iv: string;
+  licenseKey: string;
+};
