@@ -1,6 +1,7 @@
 export type CreateKeyRequest = {
   customerId: number;
   period: number;
+  expiry: number;
 };
 
 export type ActivateKeyRequest = {

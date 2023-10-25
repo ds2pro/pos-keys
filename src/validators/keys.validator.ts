@@ -4,6 +4,7 @@ import { checkSchema } from 'express-validator';
 export const createKeyValidator = checkSchema({
   customerId: STRICTLY_POSITIVE_NUMBER,
   period: TIME_PERIOD,
+  expiry: TIME_PERIOD,
 });
 
 export const activateKeyValidator = checkSchema({

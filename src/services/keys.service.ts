@@ -82,7 +82,7 @@ class KeysService implements IKeysService {
         }
       }
 
-      // const expiryDate = dto.period > 0 ? calculateDateAfterDays(dto.period) : null;
+      const expiryDate = dto.expiry > 0 ? calculateDateAfterDays(dto.period) : null;
 
       const key = await tblKeys.create(
         {
@@ -90,7 +90,7 @@ class KeysService implements IKeysService {
           customerId: dto.customerId,
           period: dto.period,
           generatedDate: new Date(),
-          expiryDate: null,
+          expiryDate: expiryDate,
           createdBy: dto.__by.id,
         },
         {
@@ -233,8 +233,6 @@ class KeysService implements IKeysService {
       const key = await tblKeys.findOne({
         where: {
           key: removeHyphens(dto.key),
-          activatedDate: { [Op.is]: null },
-          [Op.or]: [{ isDeactivated: false }, { isDeactivated: null }],
         },
         include: [
           {
@@ -244,7 +242,13 @@ class KeysService implements IKeysService {
         ],
       });
       if (!key) {
-        throw new HttpException(404, 'Invalid Key');
+        throw new HttpException(404, 'Key not found');
+      } else if (key.activatedDate) {
+        throw new HttpException(400, 'Key has already been activated');
+      } else if (key.isDeactivated) {
+        throw new HttpException(400, 'Key is deactivated');
+      } else if (key.expiryDate < new Date()) {
+        throw new HttpException(400, 'Key is expired');
       }
       key.activatedDate = new Date();
       await key.save();
