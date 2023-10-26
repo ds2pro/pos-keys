@@ -247,7 +247,7 @@ class KeysService implements IKeysService {
         throw new HttpException(400, 'Key has already been activated');
       } else if (key.isDeactivated) {
         throw new HttpException(400, 'Key is deactivated');
-      } else if (key.expiryDate < new Date()) {
+      } else if (key.expiryDate && key.expiryDate < new Date()) {
         throw new HttpException(400, 'Key is expired');
       }
       key.activatedDate = new Date();
