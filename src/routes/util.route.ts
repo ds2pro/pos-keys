@@ -6,6 +6,7 @@ class UtilRoute extends Route {
   configureRoutes() {
     this.router.route('/encrypt').post(encryptTextValidator, errorHandlerValidator, UtilController.encryptText);
     this.router.route('/decrypt').post(decryptTextValidator, errorHandlerValidator, UtilController.decryptText);
+    this.router.route('/generate-key-iv').post(UtilController.generateKeyIV);
   }
   getPath(): string {
     return '/util';

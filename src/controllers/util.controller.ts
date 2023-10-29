@@ -29,6 +29,15 @@ class UtilController {
       next(e);
     }
   };
+
+  public generateKeyIV = async (req: RequestWithUser, res: Response, next: NextFunction): Promise<void> => {
+    try {
+      const result = this.utilsService.generateKeyIv();
+      res.status(200).json(result);
+    } catch (e) {
+      next(e);
+    }
+  };
 }
 
 export default new UtilController();
