@@ -243,10 +243,10 @@ class KeysService implements IKeysService {
       });
       if (!key) {
         throw new HttpException(404, 'Key not found');
-      } else if (key.activatedDate) {
-        throw new HttpException(400, 'Key has already been activated');
-      } else if (key.isDeactivated) {
+      }else if (key.isDeactivated) {
         throw new HttpException(400, 'Key is deactivated');
+      }else if (key.activatedDate) {
+        throw new HttpException(400, 'Key has already been activated');
       } else if (key.expiryDate && key.expiryDate < new Date()) {
         throw new HttpException(400, 'Key is expired');
       }
