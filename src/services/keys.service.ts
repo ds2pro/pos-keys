@@ -287,6 +287,9 @@ class KeysService implements IKeysService {
           activatedDate: { [Op.not]: null },
         },
       });
+      if(key.isDeactivated){
+         throw new HttpException(400, 'This key has already been deactivated');
+      }
       if (!key) {
         throw new HttpException(404, 'Invalid Key');
       }
