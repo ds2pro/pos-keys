@@ -85,7 +85,10 @@ class UsersService implements IUsersService {
       await t.commit();
       const toReturn = await getUserBy({ id: user.id });
       delete toReturn.password;
-      return toReturn;
+      return {
+        id: toReturn.id,
+        message: 'User created successfully',
+      };
     } catch (e) {
       await t.rollback();
       throw e;
@@ -136,7 +139,9 @@ class UsersService implements IUsersService {
       await t.commit();
       const toReturn = await getUserBy({ id: dto.id });
       delete toReturn.password;
-      return toReturn;
+      return {
+        message: 'User updated successfully',
+      };
     } catch (e) {
       await t.rollback();
       throw e;
@@ -172,7 +177,9 @@ class UsersService implements IUsersService {
       });
       await createUserLog(dto.__by.id, 'Delete User', `User deleted user with id: ${dto.id}`, t);
       await t.commit();
-      return {};
+      return {
+        message: 'User deleted successfully',
+      };
     } catch (e) {
       await t.rollback();
       if (e.name === 'SequelizeForeignKeyConstraintError') {
@@ -282,7 +289,7 @@ class UsersService implements IUsersService {
       updatedDate: moment(user.updatedDate).unix(),
     };
   }
-  async setUserImage(dto: SetUserImageDto): Promise<EmptyResponse> {
+  async setUserImage(dto: SetUserImageDto): Promise<SetUserImageResponse> {
     const t = await s.transaction();
     try {
       await tblUsers.update(
@@ -298,13 +305,15 @@ class UsersService implements IUsersService {
       );
       await createUserLog(dto.__by.id, 'Set User Image', `User edited image with user id: ${dto.__by.id}`, t);
       await t.commit();
-      return {};
+      return {
+        message: 'User image set successfully',
+      };
     } catch (e) {
       await t.rollback();
       throw e;
     }
   }
-  async setUserLanguage(dto: SetUserLanguageDto): Promise<EmptyResponse> {
+  async setUserLanguage(dto: SetUserLanguageDto): Promise<SetUserLanguageResponse> {
     const t = await s.transaction();
     try {
       await tblUsers.update(
@@ -320,13 +329,15 @@ class UsersService implements IUsersService {
       );
       await createUserLog(dto.__by.id, 'Set User Language', `User edited language with user id: ${dto.__by.id}`, t);
       await t.commit();
-      return {};
+      return {
+        message: 'User language set successfully',
+      };
     } catch (e) {
       await t.rollback();
       throw e;
     }
   }
-  async setUserMode(dto: SetUserModeDto): Promise<EmptyResponse> {
+  async setUserMode(dto: SetUserModeDto): Promise<SetUserModeResponse> {
     const t = await s.transaction();
     try {
       await tblUsers.update(
@@ -342,7 +353,9 @@ class UsersService implements IUsersService {
       );
       await createUserLog(dto.__by.id, 'Set User Mode', `User edited mode with user id: ${dto.__by.id}`, t);
       await t.commit();
-      return {};
+      return {
+        message: 'User mode set successfully',
+      };
     } catch (e) {
       await t.rollback();
       throw e;
@@ -368,7 +381,9 @@ class UsersService implements IUsersService {
       );
       await createUserLog(dto.__by.id, 'Reset Password', `User reset password for user with id: ${dto.id}`, t);
       await t.commit();
-      return {};
+      return {
+        message: 'Password reset successfully',
+      };
     } catch (e) {
       await t.rollback();
       throw e;
