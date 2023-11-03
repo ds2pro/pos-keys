@@ -1,11 +1,11 @@
 import { Identifiable } from '@/dtos/main.dto';
 import { Role } from '@/models/role.model';
 import { CreateRoleRequest, EditRoleRequest } from '@/requests/roles.request';
-import { EmptyResponse } from './main.response';
+import { EmptyResponse, MessageResponse } from './main.response';
 
-export type CreateRoleResponse = Identifiable & CreateRoleRequest & { description: string };
-export type EditRoleResponse = Identifiable & EditRoleRequest & { description: string };
-export type DeleteRoleResponse = EmptyResponse;
+export type CreateRoleResponse = Identifiable & MessageResponse;
+export type EditRoleResponse = MessageResponse;
+export type DeleteRoleResponse = MessageResponse;
 export type GetRolesListItem = Role & { totalMembers: number; totalMembersText: string };
 export type GetRolesResponse = GetRolesListItem[];
 export type GetRoleResponse = Role & {
@@ -24,7 +24,7 @@ export interface PermissionItem {
   isChecked: boolean;
 }
 
-export type AddUsersToRoleResponse = EmptyResponse;
+export type AddUsersToRoleResponse = MessageResponse;
 export type GetUsersForRoleResponse = {
   id: number;
   userName: string;
