@@ -56,12 +56,7 @@ class CustomersService implements ICustomersService {
 
       return {
         id: customer.id,
-        name: customer.name,
-        abbreviation: customer.abbreviation,
-        phone: customer.phone,
-        mobile: customer.mobile,
-        email: customer.email,
-        isActive: customer.isActive,
+        message: 'Customer created successfully',
       };
     } catch (e) {
       await t.rollback();
@@ -98,13 +93,7 @@ class CustomersService implements ICustomersService {
       await t.commit();
       const customer = await customers.findByPk(dto.id);
       return {
-        id: customer.id,
-        name: customer.name,
-        abbreviation: customer.abbreviation,
-        phone: customer.phone,
-        mobile: customer.mobile,
-        email: customer.email,
-        isActive: customer.isActive,
+        message: 'Customer updated successfully',
       };
     } catch (e) {
       await t.rollback();
@@ -118,19 +107,6 @@ class CustomersService implements ICustomersService {
       if (!found) {
         throw new HttpException(400, 'Customer not found');
       }
-
-      await customers.update(
-        {
-          deletedById: dto.__by.id,
-        },
-        {
-          where: {
-            id: dto.id,
-          },
-          transaction: t,
-        },
-      );
-
       await customers.destroy({
         where: {
           id: dto.id,
@@ -138,10 +114,11 @@ class CustomersService implements ICustomersService {
         transaction: t,
         force: true,
       });
-
       await createUserLog(dto.__by.id, 'Delete Customer', `User deleted customer with id: ${dto.id}`, t);
       await t.commit();
-      return {};
+      return {
+        message: 'Customer deleted successfully',
+      };
     } catch (e) {
       await t.rollback();
       if (e.name === 'SequelizeForeignKeyConstraintError') {

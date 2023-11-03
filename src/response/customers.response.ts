@@ -1,11 +1,9 @@
 import { Identifiable, IncludeTimestamps } from '@/dtos/main.dto';
-import { EmptyResponse, PaginatedResponse } from './main.response';
-import { CreateCustomerRequest, EditCustomerRequest } from '@/requests/customers.request';
-import { ContactType, Country, Currency, PaymentMode } from '@/models/base.model';
+import { EmptyResponse, MessageResponse, PaginatedResponse } from './main.response';
 
-export type CreateCustomerResponse = Identifiable & CreateCustomerRequest;
-export type EditCustomerResponse = Identifiable & EditCustomerRequest;
-export type DeleteCustomerResponse = EmptyResponse;
+export type CreateCustomerResponse = Identifiable & MessageResponse;
+export type EditCustomerResponse = MessageResponse;
+export type DeleteCustomerResponse = MessageResponse;
 
 export type GetCustomersListCustomer = {
   id: number;
