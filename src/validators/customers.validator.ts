@@ -1,16 +1,7 @@
-import { ADDRESS_LENGTH, CUSTOM_NAME, DOB, EMAIL, ID, STRICTLY_POSITIVE_NUMBER } from './common.validator';
+import { ADDRESS_LENGTH, CUSTOM_NAME, DOB, EMAIL, ID, IS_ACTIVE, STRICTLY_POSITIVE_NUMBER } from './common.validator';
 import { checkSchema } from 'express-validator';
 const commonCreateEditCustomer: any = {
-  typeId: STRICTLY_POSITIVE_NUMBER,
   name: CUSTOM_NAME(50),
-  dob: {
-    optional: {
-      options: {
-        nullable: true,
-      },
-    },
-    ...DOB,
-  },
   abbreviation: {
     optional: {
       options: {
@@ -36,38 +27,13 @@ const commonCreateEditCustomer: any = {
     },
     ...CUSTOM_NAME(20),
   },
-  countryId: STRICTLY_POSITIVE_NUMBER,
-  city: {
+  isActive: {
     optional: {
       options: {
         nullable: true,
       },
     },
-    ...CUSTOM_NAME(50),
-  },
-  addressLine1: {
-    optional: {
-      options: {
-        nullable: true,
-      },
-    },
-    ...ADDRESS_LENGTH,
-  },
-  addressLine2: {
-    optional: {
-      options: {
-        nullable: true,
-      },
-    },
-    ...ADDRESS_LENGTH,
-  },
-  postalCode: {
-    optional: {
-      options: {
-        nullable: true,
-      },
-    },
-    ...CUSTOM_NAME(20),
+    ...IS_ACTIVE,
   },
 };
 
