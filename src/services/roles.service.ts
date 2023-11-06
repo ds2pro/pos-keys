@@ -143,11 +143,7 @@ class RolesService implements IRolesService {
       await t.commit();
       return {
         id: r.id,
-        name: r.name,
-        description: r.description,
-        isActive: r.isActive,
-        isSystem: r.isSystem,
-        permissionIds: dto.permissionIds,
+        message: 'Role Created successfully',
       };
     } catch (e) {
       await t.rollback();
@@ -220,12 +216,7 @@ class RolesService implements IRolesService {
       await createUserLog(dto.__by.id, 'Edit role', `Edited role id: ${role.id}`, t);
       await t.commit();
       return {
-        id: dto.id,
-        name: dto.name,
-        description: dto.description,
-        isActive: dto.isActive,
-        isSystem: dto.isSystem,
-        permissionIds: dto.permissionIds,
+        message: 'Role Updated successfully',
       };
     } catch (e) {
       await t.rollback();
@@ -233,7 +224,7 @@ class RolesService implements IRolesService {
     }
   }
 
-  async deleteRole(dto: DeleteRoleDto): Promise<EmptyResponse> {
+  async deleteRole(dto: DeleteRoleDto): Promise<DeleteRoleResponse> {
     const t = await s.transaction();
     try {
       const role = await tblRoles.findByPk(dto.id, {
@@ -258,7 +249,9 @@ class RolesService implements IRolesService {
       await role.destroy({ force: true, transaction: t });
       await createUserLog(dto.__by.id, 'Delete role', `Deleted role with keyName: ${role.keyName}`, t);
       await t.commit();
-      return {};
+      return {
+        message: 'Role deleted successfully',
+      };
     } catch (e) {
       await t.rollback();
       throw e;
@@ -378,7 +371,7 @@ class RolesService implements IRolesService {
     };
   }
 
-  async addUsersToRole(dto: AddUsersToRoleDto): Promise<EmptyResponse> {
+  async addUsersToRole(dto: AddUsersToRoleDto): Promise<AddUsersToRoleResponse> {
     const t = await s.transaction();
     try {
       const users = await tblUsers.findAll({
@@ -408,7 +401,9 @@ class RolesService implements IRolesService {
         },
       );
       await t.commit();
-      return {};
+      return {
+        message: 'Users role added successfully',
+      };
     } catch (e) {
       await t.rollback();
       throw e;

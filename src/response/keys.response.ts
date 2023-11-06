@@ -4,6 +4,7 @@ import { EmptyResponse, MessageResponse, PaginatedResponse } from './main.respon
 
 export type CreateKeyResponse = {
   key: string;
+  message: string
 };
 
 export type GetKeysListItem = IncludeTimestamps<{
@@ -28,6 +29,7 @@ export type ActivateKeyResponse = {
   expiryDate: number;
   customer: Customer;
   currentTimestamp: number;
+  message: string;
 };
 
 export type GetKeyResponse = GetKeysListItem;

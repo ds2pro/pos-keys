@@ -103,6 +103,7 @@ class KeysService implements IKeysService {
 
       return {
         key: separateKeyEveryNChars(key.key),
+        message: 'Key created successfully',
       };
     } catch (e) {
       await t.rollback();
@@ -271,6 +272,7 @@ class KeysService implements IKeysService {
         activatedDate: toTimestamp(key.activatedDate),
         expiryDate: toTimestamp(key.expiryDate),
         currentTimestamp: moment().unix(),
+        message: 'Key activated successfully',
       };
     } catch (e) {
       await t.rollback();
