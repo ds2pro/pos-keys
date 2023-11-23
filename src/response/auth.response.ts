@@ -3,6 +3,7 @@ import { OmitTimestamps, OmitPassword } from '@dtos/main.dto';
 import { Permission } from '@/models/permission.model';
 
 export interface LoginResponse {
+  message: string,
   user: UserResponseItem;
   accessToken: String;
   type: String;

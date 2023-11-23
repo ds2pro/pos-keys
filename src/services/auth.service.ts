@@ -35,6 +35,7 @@ class AuthService implements IAuthService {
     };
     await createUserLog(user.id, 'Login', 'User logged in');
     return {
+      message: 'Login successful',
       user: {
         id: user.id,
         userName: user.userName,
