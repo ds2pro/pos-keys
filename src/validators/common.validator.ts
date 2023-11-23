@@ -105,13 +105,13 @@ export const PASSWORD: ParamSchema = {
       minSymbols: 0,
       minUppercase: 0,
     },
-    errorMessage: 'should be at least 6 chars',
+    errorMessage: 'password should be at least 6 chars',
   },
 };
 export const EMAIL: ParamSchema = {
   in: 'body',
   isEmail: {
-    errorMessage: 'entered is invalid',
+    errorMessage: 'The email address you entered is invalid',
   },
 };
 
@@ -123,7 +123,7 @@ export const IMAGE: ParamSchema = {
   },
   in: 'body',
   isString: {
-    errorMessage: 'should be a string',
+    errorMessage: 'image should be a string',
   },
   trim: {
     options: [' '],
@@ -133,7 +133,7 @@ export const IMAGE: ParamSchema = {
 export const USERNAME: ParamSchema = {
   in: 'body',
   isString: {
-    errorMessage: 'should be a string',
+    errorMessage: 'username should be a string',
     bail: true,
   },
   trim: true,
@@ -159,7 +159,7 @@ export const FULL_NAME: ParamSchema = {
 export const PREFERRED_LANGUAGE: ParamSchema = {
   in: 'body',
   isString: {
-    errorMessage: 'should be a string',
+    errorMessage: 'prefferedLanguage should be a string',
     bail: true,
   },
   custom: {
@@ -174,13 +174,13 @@ export const PREFERRED_LANGUAGE: ParamSchema = {
 export const PREFERRED_MODE: ParamSchema = {
   in: 'body',
   isString: {
-    errorMessage: 'should be a string',
+    errorMessage: 'prefferedMode should be a string',
     bail: true,
   },
   custom: {
     options: value => {
       if (!isIn(value, ['Light', 'Dark'])) {
-        throw new HttpException(400, 'Preferred mode should be either Light or Dark');
+        throw new HttpException(400, 'prefferedMode should be either Light or Dark');
       }
       return true;
     },
@@ -286,14 +286,14 @@ export const NUMBER_ARRAY: ParamSchema = {
     },
   },
 };
-export const validateArrayOfIntegers = (arr: unknown) => {
+export const validateArrayOfIntegers = (arr: unknown , field?: string) => {
   const isArray = Array.isArray(arr);
   if (!isArray) {
-    throw new Error('should be an array');
+    throw new Error(`${field} should be an array`);
   }
   const returned = arr.filter(item => typeof item === 'number');
   if (returned.length !== arr.length) {
-    throw new Error('array should contain only numbers');
+    throw new Error(`${field} array should contain only numbers`);
   }
   return true;
 };
