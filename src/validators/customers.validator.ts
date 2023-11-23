@@ -7,7 +7,7 @@ const commonCreateEditCustomer: any = {
       errorMessage: 'name should be a string',
     },
     isLength: {
-      errorMessage: 'name should be not be empty and must be between 1 and 50 characters',
+      errorMessage: 'name should not be empty and must be between 1 and 50 characters',
       options: { min: 1, max: 50 },
     },
   },
