@@ -1,95 +1,35 @@
-
-  
-
-  
-
 ## ✨Overview
-
-  
-
-  
 
 This POS KEY is built using [`Node.js`](https://nodejs.org/) and [`Express`](https://expressjs.com/). It integrates with [`POS-BACKEND`](https://github.com/ds2pro/pos-backend) for client key activation. This POS KEY software generates a license key for the client and activates it for a specified duration, including the option for deactivating the key.
 
-  
-
-  
-
 ## ✨Prerequisite
-
-  
-
-  
-
+ 
 - Account in Github
-
-  
-
 - Account in Postman
-
-  
-
-  
 
 ## ✨Installation
 
-  
-
-  
-
 - Visual Studio Code for All [ Platforms](https://code.visualstudio.com/)
-
-  
 
 - Git for [Windows](https://git-scm.com/download/win) or [Mac](https://git-scm.com/download/mac)
 
-  
-
 - Node for [Windows](https://nodejs.org/en/download) or [Mac](https://nodejs.org/en/download)
-
-  
 
 - Postman for [Windows](https://www.postman.com/downloads/) or [Mac](https://www.postman.com/downloads/)
 
-  
-
 - POS BACKEND project
-
-  
-
-  
 
 ## ✨Setup
 
-  
-
-  
-
 #### To set up the project locally, follow these steps:
 
-  
-
-  
-
 #### 1. Clone the repository:
-
   
-
-  
-
 -  `git clone https://github.com/ds2pro/pos-keys.git`
-
-  
-
-  
 
 #### 2. Install dependencies:
 
-  
-
 -  `npm i`
-
-  
 
   
 
@@ -97,7 +37,11 @@ This POS KEY is built using [`Node.js`](https://nodejs.org/) and [`Express`](htt
 
   
 
+  
+
 - [ ] PORT
+
+  
 
   
 
@@ -105,7 +49,11 @@ This POS KEY is built using [`Node.js`](https://nodejs.org/) and [`Express`](htt
 
   
 
+  
+
 - [ ] DB_HOST= localhost
+
+  
 
   
 
@@ -113,7 +61,11 @@ This POS KEY is built using [`Node.js`](https://nodejs.org/) and [`Express`](htt
 
   
 
+  
+
 - [ ] DB_USER
+
+  
 
   
 
@@ -121,7 +73,11 @@ This POS KEY is built using [`Node.js`](https://nodejs.org/) and [`Express`](htt
 
   
 
+  
+
 - [ ] NODE_ENV= local
+
+  
 
   
 
@@ -131,7 +87,11 @@ This POS KEY is built using [`Node.js`](https://nodejs.org/) and [`Express`](htt
 
   
 
+  
+
 #### 4. _Build the project :_
+
+  
 
   
 
@@ -141,7 +101,11 @@ This POS KEY is built using [`Node.js`](https://nodejs.org/) and [`Express`](htt
 
   
 
+  
+
 #### 5. Start the project:
+
+  
 
   
 
@@ -151,7 +115,11 @@ This POS KEY is built using [`Node.js`](https://nodejs.org/) and [`Express`](htt
 
   
 
+  
+
 ## ✨Login to the project
+
+  
 
   
 
@@ -159,13 +127,21 @@ This POS KEY is built using [`Node.js`](https://nodejs.org/) and [`Express`](htt
 
   
 
+  
+
 #### 2. Open Postman
+
+  
 
   
 
 #### 3. Navigation to:
 
+  
+
 -  `POS Keys > Login`
+
+  
 
   
 
@@ -173,11 +149,17 @@ Log into the system as a super user.
 
   
 
+  
+
 #### 4. Change the environment:
 
   
 
+  
+
 -  `local`
+
+  
 
   
 
@@ -187,7 +169,11 @@ Log into the system as a super user.
 
   
 
+  
+
 ## ✨Usage
+
+  
 
   
 
@@ -195,50 +181,76 @@ Log into the system as a super user.
 
   
 
+  
+
 #### 1. _Create a new customer :_
+
+  
 
 Navigation to:
 
+  
+
 -  `POS Keys > Customers > Create Customer`
- 
+
 A new customer record will be inserted into POS-KEY Database.
+
+  
 
 Copy the customer Id from the response.
 
   
 
-#### 2. _Generate a key :_
- 
+  
 
-Navigation to:  
+#### 2. _Generate a key :_
+
+  
+
+Navigation to:
+
+  
 
 -  `POS Keys > Keys> Create Key`
 
   
 
+  
+
 The generated key record will be inserted into POS-KEY Database.
+
+  
 
 Paste the customer Id into the body of the request.
 
+  
+
 Copy the key from the response.
 
-
+  
+  
+  
 
 **Difference between period and expiry:**
   
 
 Period: It denotes the duration, expressed in days, for which a license key remains valid.
-  
 
 Expiry: It determines the expiry date field. It should either be -1 or a positive number greater than 0. If it greater than 0, the calculation of the `expiryDate` is contingent upon the `period`.
 
-  
+To generate a one-year license for the client:
+period: 365 
+expiry: 1 
 
 #### 3. _Activate the key :_
 
   
 
+  
+
 Navigation to:
+
+  
 
   
 
@@ -246,9 +258,15 @@ Navigation to:
 
   
 
+  
+
 Paste the copied key here.
 
+  
+
 Update the key in POS-KEY Database to be active.
+
+  
 
   
 
@@ -256,11 +274,17 @@ Update the key in POS-KEY Database to be active.
 
   
 
+  
+
 #### 1. _Deactivate the key :_
 
   
 
+  
+
 Navigation to:
+
+  
 
   
 
@@ -268,7 +292,11 @@ Navigation to:
 
   
 
+  
+
 Update the key in POS-KEY Database to be deactivated.
+
+  
 
   
 
@@ -276,11 +304,17 @@ Update the key in POS-KEY Database to be deactivated.
 
   
 
+  
+
 #### 1. _Generate a key :_
 
   
 
+  
+
 Navigation to:
+
+  
 
   
 
@@ -288,11 +322,19 @@ Navigation to:
 
   
 
+  
+
 The generated key record will be inserted into POS-KEY Database.
+
+  
 
 Copy the key from the response.
 
+  
+
 #### 2. _Activate the key :_
+
+  
 
   
 
@@ -300,31 +342,53 @@ Navigation to:
 
   
 
+  
+
 -  `POS > Keys> Activate Key`
+
+  
 
   
 
 Paste the copied key here.
 
+  
+
 In POS-BACKEND database, insert a new record into **mechaeem_licensing** table.
+
+  
 
 In POS-KEY database, update the key to be active.
 
+  
+
 ### Revoke all licenses:
 
+  
+
 **Owner Side (POS KEY Database):**
+
+  
 
 Delete the records in the **tblKeys** table within the **mechaeem_licensing** Database.
 
   
 
+  
+
 **Client Side (POS BACKEND Database):**
+
+  
 
 Delete the records in the **tblLicense** table within the **pointpro_dev** Database.
 
   
 
+  
+
 ## ✨ Contributing
+
+  
 
   
 
@@ -336,7 +400,11 @@ The Project is tracked by Jira, If you wish to make changes, **please follow the
 
   
 
+  
+
 _Checkout:_
+
+  
 
   
 
@@ -348,7 +416,11 @@ _Checkout:_
 
   
 
+  
+
 _Branching_
+
+  
 
   
 
@@ -360,7 +432,11 @@ _Branching_
 
   
 
+  
+
 _PR before merging into testing_
+
+  
 
   
 
