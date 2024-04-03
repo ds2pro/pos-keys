@@ -29,6 +29,14 @@ This POS KEY is built using [`Node.js`](https://nodejs.org/) and [`Express`](htt
 - `npm i`
 
 #### 3. Configure the environment variables (.env file):
+ - [ ] PORT
+ - [ ] DB_NAME
+ - [ ] DB_HOST= localhost
+ - [ ] DB_PORT
+ - [ ] DB_USER
+ - [ ] DB_PASS
+ - [ ] NODE_ENV= local
+ - [ ] SECRET_KEY
 
 #### 4. _Build the project :_
 -  `npm run build`
