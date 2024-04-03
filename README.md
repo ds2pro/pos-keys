@@ -288,7 +288,7 @@ Navigation to:
 
   
 
--  `POS Keys > Keys> Activate Key`
+-  `POS Keys > Keys> Deactivate Key`
 
   
 
