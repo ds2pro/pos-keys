@@ -200,14 +200,6 @@ export const calculateDateAfterDays = (days: number): Date => {
   return currentDate;
 };
 
-export const calculateExpiryDate = (days: number): Date => {
-  const currentDate = new Date();
-  //currentDate.setDate(currentDate.getDate() + days);
-  currentDate.setMinutes(currentDate.getMinutes() + 1);
-  currentDate.setHours(currentDate.getHours() + 3);
-  return currentDate;
-};
-
 export const separateKeyEveryNChars = (key: string, n = 5): string => {
   let separatedKey = '';
   for (let i = 0; i < key.length; i += n) {
