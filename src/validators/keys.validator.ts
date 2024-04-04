@@ -1,10 +1,10 @@
-import { CUSTOM_NAME, STRICTLY_POSITIVE_NUMBER, TIME_PERIOD } from './common.validator';
+import { CUSTOM_NAME, STRICTLY_POSITIVE_NUMBER, TIME_EXPIRY, TIME_PERIOD } from './common.validator';
 import { checkSchema } from 'express-validator';
 
 export const createKeyValidator = checkSchema({
   customerId: STRICTLY_POSITIVE_NUMBER,
   period: TIME_PERIOD,
-  expiry: TIME_PERIOD,
+  expiry: TIME_EXPIRY,
 });
 
 export const activateKeyValidator = checkSchema({

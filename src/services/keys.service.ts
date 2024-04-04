@@ -17,6 +17,7 @@ import { EmptyResponse, MessageResponse } from '@/response/main.response';
 import { createUserLog } from '@/utils/user.util';
 import {
   calculateDateAfterDays,
+  calculateExpiryDate,
   calculatePaginationFields,
   getSearchFieldsConds,
   getSearchFieldsCondsForeign,
@@ -82,7 +83,7 @@ class KeysService implements IKeysService {
         }
       }
 
-      const expiryDate = dto.expiry > 0 ? calculateDateAfterDays(dto.period) : null;
+      const expiryDate = dto.expiry > 0 ? calculateExpiryDate(dto.period) : null;
 
       const key = await tblKeys.create(
         {

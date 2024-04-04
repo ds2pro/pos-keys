@@ -224,6 +224,19 @@ const getPositiveNumberSchema = (strict?: boolean): any => {
 const getPeriodNumberSchema = (): any => {
   return {
     in: 'body',
+    isFloat: {
+      options: {
+        custom: {
+          options: (value: number) => value === -1 || value > 0,
+        },
+      },
+      errorMessage: `should be either -1 or a positive number greater than 0`,
+    },
+  };
+};
+const getExpiryNumberSchema = (): any => {
+  return {
+    in: 'body',
     isInt: {
       options: {
         custom: {
@@ -332,6 +345,7 @@ export const ADDRESS_LENGTH: ParamSchema = {
 };
 
 export const TIME_PERIOD: ParamSchema = getPeriodNumberSchema();
+export const TIME_EXPIRY: ParamSchema = getExpiryNumberSchema();
 export const STRICTLY_POSITIVE_NUMBER: ParamSchema = getPositiveNumberSchema(true);
 export const POSITIVE_NUMBER: ParamSchema = getPositiveNumberSchema();
 export const STRICTLY_POSITIVE_FLOAT: ParamSchema = getPositiveFloatNumberSchema(true);
