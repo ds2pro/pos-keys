@@ -204,7 +204,7 @@ export const calculateExpiryDate = (days: number): Date => {
   const currentDate = new Date();
   //currentDate.setDate(currentDate.getDate() + days);
   currentDate.setMinutes(currentDate.getMinutes() + 1);
-  //currentDate.setHours(currentDate.getHours() + 3);
+  currentDate.setHours(currentDate.getHours() + 3);
   return currentDate;
 };
 
