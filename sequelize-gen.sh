@@ -1,1 +1,1 @@
-sequelize-auto -o "./src/database/models" -h 198.71.48.113 -d mechaeem_licensing -u mechaeem_ds_pos1 -x w1T70_lx -p 1433  --dialect mssql --lang ts -a ./sequelize-auto-options.json
+sequelize-auto -o "./src/database/models" -h 198.71.48.113 -d mechaeem_licensing -u pointpro_keys -x '"1v62up7n1Ou3hr4J"' -p 1433  --dialect mssql --lang ts -a ./sequelize-auto-options.json -c ./sequelize-auto-config.json

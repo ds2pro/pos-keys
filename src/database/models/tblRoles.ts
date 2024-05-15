@@ -142,7 +142,6 @@ export class tblRoles extends Model<tblRolesAttributes, tblRolesCreationAttribut
         sequelize,
         tableName: 'tblRoles',
         schema: 'dbo',
-        hasTrigger: true,
         timestamps: true,
         paranoid: true,
         deletedAt: 'deletedDate',

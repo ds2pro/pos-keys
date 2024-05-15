@@ -4,7 +4,7 @@ import { EmptyResponse, MessageResponse, PaginatedResponse } from './main.respon
 
 export type CreateKeyResponse = {
   key: string;
-  message: string
+  message: string;
 };
 
 export type GetKeysListItem = IncludeTimestamps<{

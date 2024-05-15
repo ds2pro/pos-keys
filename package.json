@@ -5,7 +5,7 @@
   "author": "DS2Pro",
   "license": "ISC",
   "scripts": {
-    "generate:local": "generate-models.sh local && npm run lint:fix",
+    "generate:local": "bash generate-models.sh local && npm run lint:fix",
     "generate:dev": "generate-models.sh dev && npm run lint:fix",
     "start:dev": "npm run build && cross-env NODE_ENV=development node dist/server.js",
     "start": "node dist/server.js",

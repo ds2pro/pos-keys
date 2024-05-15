@@ -1,0 +1,10 @@
+{
+    "pool": {
+          "max": 20,
+          "idle": 150000,
+          "acquire": 600000
+    },
+    "dialectOptions": {
+        "options": { "requestTimeout": 600000 }
+      }
+}

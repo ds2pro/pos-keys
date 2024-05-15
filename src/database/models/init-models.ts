@@ -19,6 +19,8 @@ import { tblUsers as _tblUsers } from './tblUsers';
 import type { tblUsersAttributes, tblUsersCreationAttributes } from './tblUsers';
 import { tblUsersLog as _tblUsersLog } from './tblUsersLog';
 import type { tblUsersLogAttributes, tblUsersLogCreationAttributes } from './tblUsersLog';
+import { tblVersions as _tblVersions } from './tblVersions';
+import type { tblVersionsAttributes, tblVersionsCreationAttributes } from './tblVersions';
 
 export {
   _customers as customers,
@@ -31,6 +33,7 @@ export {
   _tblSettings as tblSettings,
   _tblUsers as tblUsers,
   _tblUsersLog as tblUsersLog,
+  _tblVersions as tblVersions,
 };
 
 export type {
@@ -54,6 +57,8 @@ export type {
   tblUsersCreationAttributes,
   tblUsersLogAttributes,
   tblUsersLogCreationAttributes,
+  tblVersionsAttributes,
+  tblVersionsCreationAttributes,
 };
 
 export function initModels(sequelize: Sequelize) {
@@ -67,6 +72,7 @@ export function initModels(sequelize: Sequelize) {
   const tblSettings = _tblSettings.initModel(sequelize);
   const tblUsers = _tblUsers.initModel(sequelize);
   const tblUsersLog = _tblUsersLog.initModel(sequelize);
+  const tblVersions = _tblVersions.initModel(sequelize);
 
   tblKeys.belongsTo(customers, { as: 'customer', foreignKey: 'customerId' });
   customers.hasMany(tblKeys, { as: 'tblKeys', foreignKey: 'customerId' });
@@ -94,5 +100,6 @@ export function initModels(sequelize: Sequelize) {
     tblSettings: tblSettings,
     tblUsers: tblUsers,
     tblUsersLog: tblUsersLog,
+    tblVersions: tblVersions,
   };
 }
