@@ -32,8 +32,8 @@ class UtilsService implements IUtilsService {
   }
 
   generateKeyIv(): GenerateKeyIvResponse {
-    const key: string = crypto.randomBytes(32).toString('hex');
-    const iv: string = crypto.randomBytes(16).toString('hex');
+    const key: string = crypto.randomBytes(16).toString('hex');
+    const iv: string = crypto.randomBytes(8).toString('hex');
 
     return {
       key: key,
